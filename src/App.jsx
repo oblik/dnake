@@ -6,7 +6,6 @@ import GameOver from './components/GameOver'
 import { ThirdwebProvider } from "thirdweb/react";
 import { useActiveAccount } from 'thirdweb/react'
 import ConnectWallet from './components/Wallet'
-import CoinDeployer from './components/CoinDeployer'
 
 function AppContent() {
   const [gameState, setGameState] = useState('welcome'); // welcome, playing, gameover
@@ -50,53 +49,60 @@ function AppContent() {
     setGameState('welcome');
   };
 
+  const handleGameOver = () => {
+    setGameState('gameover');
+  };
+
   return (
-    <div className="app">
-      {gameState === 'welcome' && (
-        <>
-          {showConnectWallet ? (
-            <div className="connect-wallet-screen">
-              <h2>Connect Your Wallet</h2>
-              <p>Connect your wallet to start playing</p>
-              <ConnectWallet />
-              <button 
-                className="back-button" 
-                onClick={() => setShowConnectWallet(false)}
-              >
-                Back
-              </button>
-            </div>
-          ) : (
-            <WelcomePage 
-              onStartGame={handleStartClick} 
+      <div className="app-container">
+        <div className="app">
+          {gameState === 'welcome' && (
+            <>
+              {showConnectWallet ? (
+                <div className="connect-wallet-screen">
+                  <h2>Connect Your Wallet</h2>
+                  <p>Connect your wallet to start playing</p>
+                  <ConnectWallet />
+                  <button 
+                    className="back-button" 
+                    onClick={() => setShowConnectWallet(false)}
+                  >
+                    Back
+                  </button>
+                </div>
+              ) : (
+                <WelcomePage 
+                  onStartGame={handleStartClick} 
+                  highScore={highScore}
+                  walletAddress={activeAccount?.address}
+                />
+              )}
+            </>
+          )}
+          
+          {gameState === 'playing' && (
+            <GameBoard 
+              canvasRef={canvasRef}
+              onGameOver={handleGameOver}
+              score={score}
+              setScore={setScore}
               highScore={highScore}
+              setHighScore={setHighScore}
+              setGameState={setGameState}
               walletAddress={activeAccount?.address}
             />
           )}
-        </>
-      )}
-      
-      {gameState === 'playing' && (
-        <GameBoard 
-          canvasRef={canvasRef}
-          score={score}
-          setScore={setScore}
-          highScore={highScore}
-          setHighScore={setHighScore}
-          setGameState={setGameState}
-          walletAddress={activeAccount?.address}
-        />
-      )}
-      
-      {gameState === 'gameover' && (
-        <GameOver 
-          score={score} 
-          highScore={highScore}
-          onRestart={restartGame}
-          walletAddress={activeAccount?.address}
-        />
-      )}
-    </div>
+          
+          {gameState === 'gameover' && (
+            <GameOver 
+              score={score} 
+              highScore={highScore}
+              onRestart={restartGame}
+              walletAddress={activeAccount?.address}
+            />
+          )}
+        </div>
+      </div>
   );
 }
 
