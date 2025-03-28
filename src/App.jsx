@@ -6,6 +6,7 @@ import GameOver from './components/GameOver'
 import { ThirdwebProvider } from "thirdweb/react";
 import { useActiveAccount } from 'thirdweb/react'
 import ConnectWallet from './components/Wallet'
+import CoinDeployer from './components/CoinDeployer'
 
 function AppContent() {
   const [gameState, setGameState] = useState('welcome'); // welcome, playing, gameover
