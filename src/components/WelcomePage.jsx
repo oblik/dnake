@@ -1,6 +1,6 @@
 import React from 'react';
 
-function WelcomePage({ onStartGame, highScore }) {
+function WelcomePage({ onStartGame, highScore, walletAddress }) {
   return (
     <div className="welcome-container">
       <div className="game-title">
@@ -14,8 +14,16 @@ function WelcomePage({ onStartGame, highScore }) {
       <p className="subtitle">Are you ready to slither?</p>
       
       <button className="start-button" onClick={onStartGame}>
-        START GAME
+        {walletAddress ? 'START GAME' : 'CONNECT WALLET'}
       </button>
+      
+      {walletAddress && (
+        <div className="wallet-info">
+          <p className="connected-wallet">
+            Wallet: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+          </p>
+        </div>
+      )}
       
       <div className="features">
         <div className="feature">

@@ -5,7 +5,7 @@ import { setupRoundRectPolyfill } from './utils';
 // Setup polyfill for roundRect
 setupRoundRectPolyfill();
 
-function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGameState }) {
+function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGameState, walletAddress }) {
   const [snake, setSnake] = useState([
     { x: 10, y: 10 },
     { x: 9, y: 10 },
@@ -372,7 +372,14 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
   
   return (
     <div className="game-container">
-      <div className="score-display">Score: {score}</div>
+      <div className="game-header">
+        <div className="score-display">Score: {score}</div>
+        {walletAddress && (
+          <div className="wallet-display">
+            {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+          </div>
+        )}
+      </div>
       <canvas 
         ref={canvasRef} 
         width={CANVAS_WIDTH} 

@@ -301,3 +301,75 @@ body {
     font-size: 1rem;
   }
 }
+
+/* Wallet Styles */
+.connect-wallet-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: var(--secondary-bg);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.connect-wallet-screen h2 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.connect-wallet-screen p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.back-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.wallet-info {
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #4ecdc4;
+}
+
+.wallet-display {
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #4ecdc4;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
