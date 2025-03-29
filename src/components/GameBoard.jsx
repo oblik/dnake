@@ -1,11 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GRID_SIZE, CELL_SIZE, GAME_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, DIRECTIONS } from './constants';
 import { setupRoundRectPolyfill } from './utils';
+import './GameBoard.css';
+import { snakeTypes } from './SnakePreview';
 
 // Setup polyfill for roundRect
 setupRoundRectPolyfill();
 
-function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGameState, walletAddress }) {
+function GameBoard({ 
+  canvasRef, 
+  onGameOver, 
+  score, 
+  setScore, 
+  highScore, 
+  setHighScore, 
+  walletAddress,
+  snakeType,
+  onExitGame,
+  setGameState
+}) {
   const [snake, setSnake] = useState([
     { x: 10, y: 10 },
     { x: 9, y: 10 },
@@ -62,6 +75,13 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
     canvas.style.width = `${CANVAS_WIDTH}px`;
     canvas.style.height = `${CANVAS_HEIGHT}px`;
   }, [canvasRef]);
+  
+  // Get snake colors based on selected type
+  const selectedSnakeColors = snakeTypes.find(s => s.id === snakeType) || {
+    primaryColor: '#00796b',
+    secondaryColor: '#004d40',
+    eyeColor: '#ffffff'
+  };
   
   // Game loop
   useEffect(() => {
@@ -143,7 +163,7 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
       }
       
       // Draw snake
-      ctx.fillStyle = '#ff3e3e';
+      ctx.fillStyle = selectedSnakeColors.primaryColor;
       currentSnake.forEach((segment, index) => {
         ctx.beginPath();
         ctx.roundRect(
@@ -157,7 +177,7 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
         
         // Draw eyes for the head
         if (index === 0) {
-          ctx.fillStyle = '#000';
+          ctx.fillStyle = selectedSnakeColors.eyeColor;
           const eyeSize = 2;
           const eyeOffset = 5;
           
@@ -204,7 +224,7 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
             ctx.fill();
           }
           
-          ctx.fillStyle = '#ff3e3e'; // Reset color for next segments
+          ctx.fillStyle = selectedSnakeColors.primaryColor; // Reset color for next segments
         }
       });
       
@@ -246,7 +266,7 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
       setHighScore(currentScore);
       localStorage.setItem('snakeHighScore', currentScore.toString());
     }
-    setGameState('gameover');
+    onGameOver();
   };
   
   const generateFood = (currentSnake) => {
@@ -371,27 +391,46 @@ function GameBoard({ canvasRef, score, setScore, highScore, setHighScore, setGam
   }, [canvasRef]);
   
   return (
-    <div className="game-container">
+    <div className="game-board-container">
       <div className="game-header">
-        <div className="score-display">Score: {score}</div>
-        {walletAddress && (
-          <div className="wallet-display">
-            {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-          </div>
-        )}
+        <div className="player-info">
+          <span>Playing as: {snakeTypes.find(s => s.id === snakeType)?.name || 'Default Snake'}</span>
+          <span>Wallet: {walletAddress ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}` : 'Not connected'}</span>
+        </div>
+        
+        <div className="game-controls">
+          <button 
+            className="pause-button" 
+            onClick={() => setIsPaused(!isPaused)}
+          >
+            {isPaused ? 'Resume' : 'Pause'}
+          </button>
+          
+          <button 
+            className="exit-button" 
+            onClick={onExitGame}
+          >
+            Exit Game
+          </button>
+        </div>
       </div>
+      
       <canvas 
         ref={canvasRef} 
         width={CANVAS_WIDTH} 
         height={CANVAS_HEIGHT}
         className="game-canvas"
       />
-      <button 
-        className="pause-button" 
-        onClick={() => setIsPaused(!isPaused)}
-      >
-        {isPaused ? '▶' : '⏸'}
-      </button>
+      
+      {isPaused && (
+        <div className="pause-overlay">
+          <div className="pause-menu">
+            <h2>Game Paused</h2>
+            <button onClick={() => setIsPaused(false)}>Resume</button>
+            <button onClick={onExitGame}>Exit to Menu</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,225 @@
+.character-selection-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1f2c, #121620);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
+.selection-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.selection-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #64b5f6, #2979ff, #82b1ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.selection-header p {
+  font-size: 1.1rem;
+  color: #b0bec5;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.snake-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.snake-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.snake-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.snake-preview-container {
+  height: 150px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.snake-preview-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+.snake-name {
+  padding: 1.2rem 1.5rem 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #eceff1;
+  text-align: center;
+}
+
+.snake-description {
+  padding: 0 1.5rem 1.2rem;
+  font-size: 0.95rem;
+  color: #b0bec5;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.select-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to right, #00897b, #00695c);
+  color: white;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.select-btn:hover {
+  background: linear-gradient(to right, #00bfa5, #00897b);
+}
+
+.selection-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.gameplay-note {
+  font-size: 1.1rem;
+  color: #ffcc80;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 2rem;
+  background: rgba(255, 152, 0, 0.1);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.wallet-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: #b0bec5;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Minting screen styles */
+.minting-screen {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: linear-gradient(135deg, #1a1f2c, #121620);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-align: center;
+}
+
+.minting-screen h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, #ffab40, #ff9100, #ff6d00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.selected-snake {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.selected-snake h3 {
+  font-size: 1.5rem;
+  color: #eceff1;
+  margin-top: 1rem;
+}
+
+.minting-screen p {
+  color: #b0bec5;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.mint-button {
+  background: linear-gradient(to right, #6200ea, #7e57c2);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 5px 15px rgba(94, 53, 177, 0.3);
+}
+
+.mint-button:hover {
+  background: linear-gradient(to right, #651fff, #7c4dff);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(94, 53, 177, 0.4);
+}
+
+.back-button {
+  background: transparent;
+  color: #b0bec5;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+} 

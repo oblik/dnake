@@ -1,0 +1,117 @@
+.game-board-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1f2c;
+  position: relative;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.game-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.pause-button, .exit-button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.pause-button {
+  background-color: #546e7a;
+  color: white;
+}
+
+.pause-button:hover {
+  background-color: #607d8b;
+}
+
+.exit-button {
+  background-color: #c62828;
+  color: white;
+}
+
+.exit-button:hover {
+  background-color: #d32f2f;
+}
+
+.game-canvas {
+  flex: 1;
+  background-color: #121620;
+  display: block;
+}
+
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.pause-menu {
+  background: linear-gradient(135deg, #1a1f2c, #121620);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 300px;
+}
+
+.pause-menu h2 {
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.pause-menu button {
+  background: linear-gradient(to right, #00897b, #00695c);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 600;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 80%;
+}
+
+.pause-menu button:hover {
+  background: linear-gradient(to right, #00bfa5, #00897b);
+  transform: translateY(-2px);
+}
+
+.pause-menu button:last-child {
+  background: linear-gradient(to right, #546e7a, #455a64);
+}
+
+.pause-menu button:last-child:hover {
+  background: linear-gradient(to right, #607d8b, #546e7a);
+} 
