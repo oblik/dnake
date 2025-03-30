@@ -8,6 +8,7 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { useActiveAccount } from 'thirdweb/react'
 import ConnectWallet from './components/Wallet'
 import SnakePreview, { snakeTypes } from './components/SnakePreview'
+import { client, editionDropContract, editionDropTokenId } from '../thirdweb/contants'
 
 function AppContent() {
   const [gameState, setGameState] = useState('welcome'); // welcome, selecting, minting, playing, gameover
