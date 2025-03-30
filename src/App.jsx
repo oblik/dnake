@@ -9,6 +9,11 @@ import { useActiveAccount } from 'thirdweb/react'
 import ConnectWallet from './components/Wallet'
 import SnakePreview, { snakeTypes } from './components/SnakePreview'
 import { client, editionDropContract, editionDropTokenId } from '../thirdweb/contants'
+import {
+	TransactionButton
+} from "thirdweb/react";
+import { useReadContract } from 'thirdweb/react'
+import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 
 function AppContent() {
   const [gameState, setGameState] = useState('welcome'); // welcome, selecting, minting, playing, gameover
@@ -18,6 +23,11 @@ function AppContent() {
   const [showConnectWallet, setShowConnectWallet] = useState(false);
   const activeAccount = useActiveAccount();
   const [selectedSnake, setSelectedSnake] = useState(null);
+  const [mintingError, setMintingError] = useState('');
+  const [mintingSuccess, setMintingSuccess] = useState(false);
+  const [transactionHash, setTransactionHash] = useState('');
+  
+  // const { mutate: claimNFT } = useClaimNFT(editionDropContract);
   
   // Initialize the game
   useEffect(() => {
@@ -89,6 +99,30 @@ function AppContent() {
     setGameState('welcome');
   };
 
+  const renderMintingError = () => (
+    <div className="minting-message error">
+      <p>Error: {mintingError}</p>
+    </div>
+  );
+  
+  const renderMintingSuccess = () => (
+    <div className="minting-message success">
+      <p>Successfully minted your Snake NFT!</p>
+      <a 
+        href={`https://sepolia.etherscan.io/tx/${transactionHash}`} 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        View transaction
+      </a>
+    </div>
+  );
+  
+  const refetchNfts = async () => {
+    // Simulate refreshing NFT data
+    return Promise.resolve();
+  };
+
   return (
       <div className="app-container">
         <div className="app">
@@ -137,12 +171,43 @@ function AppContent() {
                 <h3>{snakeTypes.find(s => s.id === selectedSnake)?.name || 'Snake'}</h3>
               </div>
               <p>This snake will be minted as your NFT and used as your character in the game</p>
-              <button 
-                className="mint-button"
-                onClick={handleMintComplete}
-              >
-                Mint Snake NFT
-              </button>
+              
+              <TransactionButton
+          transaction={() =>
+            claimTo({
+              contract: editionDropContract,
+              tokenId: editionDropTokenId,
+              to: activeAccount?.address,
+              quantity: 1n,
+            })
+          }
+          onError={(error) => {
+            setMintingError(error.message);
+            setTimeout(() => setMintingError(''), 5000);
+          }}
+          onTransactionConfirmed={async (result) => {
+            setTransactionHash(result.transactionHash);
+            setMintingSuccess(true);
+            await refetchNfts();
+            
+            // Save the selected snake to localStorage
+            localStorage.setItem(`snakeCharacter_${activeAccount?.address}`, selectedSnake);
+            
+            setTimeout(() => {
+              setMintingSuccess(false);
+              // setTransactionHash('');
+              
+              // Redirect to game board
+              setGameState('playing');
+              setScore(0);
+            }, 5000);
+          }}
+        >
+          Mint Snake NFT
+        </TransactionButton>
+              {mintingError && renderMintingError()}
+              {mintingSuccess && renderMintingSuccess()}
+              
               <button 
                 className="back-button" 
                 onClick={() => setGameState('selecting')}
